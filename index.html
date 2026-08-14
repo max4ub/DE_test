@@ -1,0 +1,124 @@
+<!-- 1. DOCTYPE — каже браузеру "це HTML5". Завжди перший рядок. -->
+<!DOCTYPE html>
+
+<!-- 2. <html> — кореневий елемент. lang="uk" підказує мову сторінки
+     (важливо для пошуковиків і читалок з екрана). -->
+<html lang="uk">
+
+<!--
+  3. <head> — НЕВИДИМА частина. Тут налаштування, а не контент.
+     Усе, що всередині <head>, користувач на сторінці не бачить.
+-->
+<head>
+  <!-- Кодування символів. Без цього кирилиця може перетворитись на кракозябри. -->
+  <meta charset="UTF-8" />
+
+  <!-- Щоб сторінка нормально виглядала на телефоні, а не була зменшеною копією десктопної. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Те, що видно у вкладці браузера. -->
+  <title>Моя перша сторінка на Tailwind</title>
+
+  <!--
+    Підключаємо Tailwind CSS.
+    Це "play CDN" — найпростіший спосіб для навчання: один рядок і все працює.
+    Він компілює стилі прямо в браузері.
+
+    ⚠️ Для реального проєкту так НЕ роблять — там Tailwind ставлять через npm,
+    і він збирає один маленький .css файл. Але для вивчення це ідеально.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<!--
+  4. <body> — ВИДИМА частина. Усе, що бачить користувач, лежить тут.
+
+  Класи на body:
+    bg-slate-100  → фон світло-сірий (slate — назва кольору, 100 — відтінок: чим більше, тим темніше)
+    min-h-screen  → мінімальна висота = висота екрана
+    flex          → вмикає flexbox (спосіб розкладати елементи)
+    items-center  → центрує по вертикалі
+    justify-center→ центрує по горизонталі
+    p-4           → padding (внутрішній відступ) з усіх боків
+-->
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+  <!--
+    ============ КАРТКА ============
+    Ось та сама "карточка". Це просто <div> з набором класів.
+
+    Головна ідея Tailwind: ти НЕ пишеш окремий CSS-файл.
+    Замість цього чіпляєш маленькі готові класи прямо на елемент.
+    Один клас = одна CSS-властивість.
+
+    bg-white       → білий фон
+    max-w-sm       → максимальна ширина (small ≈ 384px), щоб картка не розтягувалась
+    w-full         → займати всю доступну ширину (але не більше max-w-sm)
+    rounded-2xl    → заокруглені кути
+    shadow-lg      → тінь
+    overflow-hidden→ обрізає все, що вилазить за заокруглені кути
+  -->
+  <div class="bg-white max-w-sm w-full rounded-2xl shadow-lg overflow-hidden">
+
+    <!-- Кольорова смужка зверху. h-24 = висота, bg-gradient-* = градієнт. -->
+    <div class="h-24 bg-gradient-to-r from-sky-500 to-indigo-500"></div>
+
+    <!-- Вміст картки. p-6 = відступ всередині з усіх боків. -->
+    <div class="p-6">
+
+      <!--
+        Аватарка — просто кружечок з буквою.
+        -mt-16 — ВІД'ЄМНИЙ відступ зверху: піднімає кружечок на смужку.
+        Мінус перед класом працює в Tailwind саме так.
+      -->
+      <div class="-mt-16 mb-4 w-20 h-20 rounded-full bg-indigo-600 border-4 border-white
+                  flex items-center justify-center text-white text-2xl font-bold">
+        M
+      </div>
+
+      <!--
+        Заголовок.
+        text-xl     → розмір шрифту
+        font-bold   → жирність
+        text-slate-800 → колір тексту (майже чорний)
+      -->
+      <h1 class="text-xl font-bold text-slate-800">Maks Chubenko</h1>
+
+      <!-- Підзаголовок. text-sm = дрібніший, text-slate-500 = блідіший сірий. -->
+      <p class="text-sm text-slate-500 mb-4">Вивчаю HTML, CSS та Data Engineering</p>
+
+      <!-- Опис. leading-relaxed = збільшена міжрядкова відстань (легше читати). -->
+      <p class="text-slate-600 text-sm leading-relaxed mb-5">
+        Це моя перша сторінка на Tailwind. Тут немає жодного рядка власного CSS —
+        весь вигляд зібраний з класів прямо в HTML.
+      </p>
+
+      <!--
+        Теги-бейджики.
+        flex flex-wrap gap-2 → вишикувати в ряд, переносити на новий рядок, відступ 2 між ними.
+      -->
+      <div class="flex flex-wrap gap-2 mb-6">
+        <span class="px-3 py-1 text-xs rounded-full bg-sky-100 text-sky-700">HTML</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-indigo-100 text-indigo-700">CSS</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700">Python</span>
+        <span class="px-3 py-1 text-xs rounded-full bg-amber-100 text-amber-700">SQL</span>
+      </div>
+
+      <!--
+        Кнопка.
+        hover:bg-indigo-700 → колір МІНЯЄТЬСЯ при наведенні миші.
+        Префікс hover: — це і є вся "магія" Tailwind: стан + двокрапка + клас.
+        transition-colors → щоб зміна кольору була плавною, а не різкою.
+      -->
+      <a href="https://github.com/max4ub"
+         class="block text-center w-full py-2.5 rounded-lg
+                bg-indigo-600 hover:bg-indigo-700 transition-colors
+                text-white text-sm font-medium">
+        Мій GitHub
+      </a>
+
+    </div>
+  </div>
+
+</body>
+</html>
